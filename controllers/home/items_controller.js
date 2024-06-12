@@ -11,8 +11,4 @@ const getAllItems = async(req,res)=>{
  }
  module.exports = {
     getAllItems
-<<<<<<< HEAD
    }
-=======
-   }
->>>>>>> 13384bac412d2bb6c64861e6fcb189e95ee56b69
