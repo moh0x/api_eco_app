@@ -11,10 +11,7 @@ const userRoute = require('./routes/user_routes');
 const categoryRoute = require('./routes/home/catgories_routes');
 const bannerRoute = require('./routes/home/banners_routes');
 const itemRoute = require('./routes/home/items_routes');
-<<<<<<< HEAD
 const favoriteRoute = require('./routes/favorites/favorites_routes');
-=======
->>>>>>> 13384bac412d2bb6c64861e6fcb189e95ee56b69
 app.use('/api/users/',userRoute);
 app.use('/api/home/categories',categoryRoute);
 app.use('/api/home/items',itemRoute);
