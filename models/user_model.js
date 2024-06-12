@@ -41,7 +41,14 @@ const userSchema = new mongoose.Schema({
     isVerify:{
         type:Boolean,
         default:false
-    }
+    },
+    favorites:{
+        type:Array,
+        required:true,
+        minLength:6,
+        maxLength:50,
+        default:[],
+    },
 });
 const User = mongoose.model("User",userSchema);
 module.exports = {User};

@@ -6,6 +6,16 @@ const { CourierClient } = require("@trycourier/courier");
 const bcrypt = require("bcryptjs");
 const {body,validationResult } = require("express-validator");
 const httpsStatus = require('../constants/https_status');
+const getUserInfo = async(req,res)=>{
+  try {
+   const token = req.headers.token;
+   const user = await User.findOne({token:token},{__v:false,password:false});  
+       res.status(200).json({"status":httpsStatus.SUCCESS,"data":user});
+   
+  } catch (error) {
+   res.status(400).json({"status":httpsStatus.ERROR,"message":"error"});
+  }
+}
 const registerFunc = async(req,res)=>{
     try {
      const email = await User.findOne({email : req.body.email});
@@ -195,5 +205,5 @@ if (verifyCode == user.verifyCode && user.verifyCode != 0 ) {
   }
 }
  module.exports = {
-  registerFunc,loginFunc,sendResetCodeFunc,resetPasswordFunc,confirmAccountFunc
+  registerFunc,loginFunc,sendResetCodeFunc,resetPasswordFunc,confirmAccountFunc,getUserInfo
  }
