@@ -50,6 +50,26 @@ const changeFavorites = async(req,res)=>{
     res.status(400).json({"status":httpsStatus.ERROR,"message":"error"});
    }
 }
+const getUserFavorites = async(req,res)=>{
+   try {
+    const token = req.headers.token;
+    const user = await User.findOne({token:token},{__v:false,password:false});
+    const arrayIds = [];
+    const favListItemsIdsNotFillter = user.favorites;
+   for (let index = 0; index < favListItemsIdsNotFillter.length; index++) {
+   if (favListItemsIdsNotFillter[index] != 1) {
+    arrayIds.push(favListItemsIdsNotFillter[index]);
+   }
+   }
+   const items = await Item.find({_id:{
+    $in:arrayIds
+   }});
+   res.status(200).json({"status":httpsStatus.SUCCESS,"data":items});
+   } catch (error) {
+    console.log(error);
+    res.status(200).json({"status":httpsStatus.ERROR,"data":null,"message":"error"});
+   }
+}
 module.exports = {
-    changeFavorites
+    changeFavorites,getUserFavorites
    }
