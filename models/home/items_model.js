@@ -16,13 +16,21 @@ const itemsSchema = new mongoose.Schema({
         type:String,
         required:true,
         minLength:6,
+<<<<<<< HEAD
         maxLength:600
+=======
+        maxLength:300
+>>>>>>> 13384bac412d2bb6c64861e6fcb189e95ee56b69
        },
        itemDescEnglish:{
         type:String,
         required:true,
         minLength:6,
+<<<<<<< HEAD
         maxLength:600
+=======
+        maxLength:300
+>>>>>>> 13384bac412d2bb6c64861e6fcb189e95ee56b69
        },
        itemImage:{
         type:String,
@@ -49,7 +57,11 @@ const itemsSchema = new mongoose.Schema({
        },
        itemDisCount:{
         type:Number,
+<<<<<<< HEAD
    
+=======
+        required:true,
+>>>>>>> 13384bac412d2bb6c64861e6fcb189e95ee56b69
         minLength:6,
         maxLength:100
        },
@@ -59,6 +71,7 @@ const itemsSchema = new mongoose.Schema({
         minLength:6,
         maxLength:100
        },
+<<<<<<< HEAD
        itemLikesCount:{
         type:Number,
         required:true,
@@ -70,3 +83,9 @@ const itemsSchema = new mongoose.Schema({
 });
 const Item = mongoose.model("Item",itemsSchema);
 module.exports = {Item};
+=======
+   
+});
+const Item = mongoose.model("Item",itemsSchema);
+module.exports = {Item};
+>>>>>>> 13384bac412d2bb6c64861e6fcb189e95ee56b69
