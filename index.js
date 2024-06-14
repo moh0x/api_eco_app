@@ -12,11 +12,13 @@ const categoryRoute = require('./routes/home/catgories_routes');
 const bannerRoute = require('./routes/home/banners_routes');
 const itemRoute = require('./routes/home/items_routes');
 const favoriteRoute = require('./routes/favorites/favorites_routes');
+const cartRoute = require('./routes/cart/cart_routes');
 app.use('/api/users/',userRoute);
 app.use('/api/home/categories',categoryRoute);
 app.use('/api/home/items',itemRoute);
 app.use('/api/home/banners',bannerRoute);
 app.use('/api/favorites',favoriteRoute);
+app.use('/api/carts',cartRoute);
 app.listen(port);
  mongoose.connect("mongodb+srv://mihoyahou:YzFN4ccF8u7HkKHi@cluster0.jjdh5dp.mongodb.net/");
 /*
@@ -24,3 +26,4 @@ app.listen(port);
       2) Make sure you allow ES module imports: Add "type": "module" to package.json file
       
       ; */
+
