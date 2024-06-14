@@ -45,8 +45,11 @@ const userSchema = new mongoose.Schema({
     favorites:{
         type:Array,
         required:true,
-        minLength:6,
-        maxLength:50,
+        default:[],
+    },
+    cart:{
+        type:Array,
+        required:true,
         default:[],
     },
 });
