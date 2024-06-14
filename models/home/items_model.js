@@ -64,8 +64,12 @@ const itemsSchema = new mongoose.Schema({
        itemLikesCount:{
         type:Number,
         required:true,
-        minLength:6,
-        maxLength:100
+     
+       },
+       itemCartCount:{
+        type:Number,
+        required:true,
+       
        },
        
    
