@@ -26,7 +26,7 @@ const changeFavorites = async(req,res)=>{
         const newUser = await User.findOne({token:token},{__v:false,password:false});
         res.status(200).json({"status":httpsStatus.SUCCESS,"data":newUser});
     } else {
-        const newFav = user.favorites.push(itemId);
+        const newFav = user.favorites.unshift(itemId);
         await User.findOneAndUpdate({token:token},{
             $set:{
                 favorites:newFav
@@ -54,15 +54,10 @@ const getUserFavorites = async(req,res)=>{
    try {
     const token = req.headers.token;
     const user = await User.findOne({token:token},{__v:false,password:false});
-    const arrayIds = [];
-    const favListItemsIdsNotFillter = user.favorites;
-   for (let index = 0; index < favListItemsIdsNotFillter.length; index++) {
-   if (favListItemsIdsNotFillter[index] != 1) {
-    arrayIds.push(favListItemsIdsNotFillter[index]);
-   }
-   }
+    const favListItemsIds = user.favorites;
+  
    const items = await Item.find({_id:{
-    $in:arrayIds
+    $in:favListItemsIds
    }});
    res.status(200).json({"status":httpsStatus.SUCCESS,"data":items});
    } catch (error) {
