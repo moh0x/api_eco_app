@@ -48,6 +48,12 @@ const itemsSchema = new mongoose.Schema({
         minLength:6,
         maxLength:200
        },
+      itemNewPrice:{
+        type:Number,
+        required:true,
+        minLength:6,
+        maxLength:200
+       },
        itemDisCount:{
         type:Number,
    
