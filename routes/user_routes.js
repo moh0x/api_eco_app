@@ -7,7 +7,7 @@ router.post('/register',body("email").isEmail().isLength({min:6,max:50}).withMes
 
 router.patch('/verifyAccount',verifyToken,userControoler.confirmAccountFunc);
 router.get('/userInfo',verifyToken,userControoler.getUserInfo);
-router.patch('/resetPassword',verifyToken,userControoler.resetPasswordFunc);
+router.patch('/resetPassword',userControoler.resetPasswordFunc);
 
 router.post('/login',body("email").isEmail().isLength({min:6,max:50}).withMessage("type valid email"),body("password").isLength({min:8,max:30}).withMessage("type valid password"),userControoler.loginFunc);
   
