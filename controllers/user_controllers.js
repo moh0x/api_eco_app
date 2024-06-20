@@ -150,8 +150,8 @@ const sendResetCodeFunc = async(req,res)=>{
 }
 const resetPasswordFunc = async(req,res)=>{
   try {     
-      const token = req.headers.token;
-      const user = await User.findOne({token:token},{__v:false,password:false});
+      const email = req.headers.email;
+      const user = await User.findOne({email:email},{__v:false,password:false});
       const resetPasswordCode = req.body.resetPasswordCode;
       const password =await bcrypt.hash(req.body.password,10);
 if (user) {
