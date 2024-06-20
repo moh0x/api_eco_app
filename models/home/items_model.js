@@ -48,15 +48,8 @@ const itemsSchema = new mongoose.Schema({
         minLength:6,
         maxLength:200
        },
-      itemNewPrice:{
-        type:Number,
-        required:true,
-        minLength:6,
-        maxLength:200
-       },
        itemDisCount:{
         type:Number,
-   
         minLength:6,
         maxLength:100
        },
@@ -66,7 +59,6 @@ const itemsSchema = new mongoose.Schema({
         minLength:6,
         maxLength:100
        },
-
        itemLikesCount:{
         type:Number,
         required:true,
@@ -74,8 +66,12 @@ const itemsSchema = new mongoose.Schema({
        },
        itemCartCount:{
         type:Number,
-        required:true,
-       
+        required:true,    
+       },
+       itemDate:{
+        type:Date,
+        default:Date.now(),
+        required:true,    
        },
        
    
