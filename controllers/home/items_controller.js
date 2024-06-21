@@ -12,7 +12,7 @@ const getAllItems = async(req,res)=>{
  const getLikesItems = async(req,res)=>{
    try {
     var token =  req.headers.token;
-    const limit = 1;
+    const limit = 4;
     const page = req.body.page || 1;
     const skip = (page - 1) * limit;
     const items = await Item.find({itemActive:true}).sort({itemLikesCount:-1}).limit(limit).skip(skip);
@@ -24,7 +24,7 @@ const getAllItems = async(req,res)=>{
 const getCartItems = async(req,res)=>{
    try {
     var token =  req.headers.token;
-    const limit = 1;
+    const limit = 4;
     const page = req.body.page || 1;
     const skip = (page - 1) * limit;
     const items = await Item.find({itemActive:true}).sort({itemCartCount:-1}).limit(limit).skip(skip);
@@ -36,7 +36,7 @@ const getCartItems = async(req,res)=>{
 const getLatestItems = async(req,res)=>{
    try {
     var token =  req.headers.token;
-    const limit = 1;
+    const limit = 4;
     const page = req.body.page || 1;
     const skip = (page - 1) * limit;
     const items = await Item.find({itemActive:true}).sort({itemDate:-1}).limit(limit).skip(skip);
