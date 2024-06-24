@@ -64,6 +64,10 @@ const itemsSchema = new mongoose.Schema({
         required:true,
      
        },
+       itemLikesArray:{
+        type:Array,
+        required:true,
+       },
        itemCartCount:{
         type:Number,
         required:true,    
@@ -78,4 +82,3 @@ const itemsSchema = new mongoose.Schema({
 });
 const Item = mongoose.model("Item",itemsSchema);
 module.exports = {Item};
-
