@@ -24,6 +24,11 @@ const categoriesSchema = new mongoose.Schema({
         minLength:6,
         maxLength:200
        },
+       categoryDate:{
+        type:Date,
+        required:true,
+       default:Date.now()
+       },
    
 });
 const Category = mongoose.model("Category",categoriesSchema);
