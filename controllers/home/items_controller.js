@@ -55,8 +55,9 @@ const getLatestItems = async(req,res)=>{
     const regex =new RegExp(textItem,'i');
     const items = await Item.find({
      $or:[
-      {itemNameArabic:regex},{itemNameEnglish:regex}, {itemActive:true}
+      {itemNameArabic:regex},{itemNameEnglish:regex}
      ],
+     itemActive:true
     
     }).sort({itemDate:-1}).limit(limit).skip(skip);
     res.status(200).json({"status":httpsStatus.SUCCESS,"data":items});
