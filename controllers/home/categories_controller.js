@@ -6,7 +6,7 @@ const getAllCategories = async(req,res)=>{
       const page = req.body.page || 1;
       const skip = (page - 1) * limit;
      var token =  req.headers.token;
-     const categories = await Category.find().sort({categoryDate:-1}).limit(limit).skip();
+     const categories = await Category.find().sort({categoryDate:-1}).limit(limit).skip(skip);
      res.status(200).json({"status":httpsStatus.SUCCESS,"data":categories});
     } catch (error){
      res.status(400).json({"status":httpsStatus.ERROR,"data":null,"message":"error"});
