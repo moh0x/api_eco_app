@@ -10,55 +10,59 @@ const changeItemCart = async(req,res)=>{
      const details = req.body.details;
      const cartListItemsIds = user.cart;
      const newObject = [];
-    if (cartListItemsIds.length < 11) {
+    if (cartListItemsIds.length ) {
+       if (count < 11) {
         if (cartListItemsIds.length == 0  ) {
-           if (count == 0 ) {
-            res.status(400).json({"status":httpsStatus.FAIL,"data":null,"message":"count 0"});
-           } else {
-            cartListItemsIds.unshift({
-                "itemId":itemId,
-                "count":count,
-                "details":details == null ? " ": details
-            });
-            const newUser = await User.findOneAndUpdate({token:token},{
-                $set:{
-                    cart:cartListItemsIds
-                }
-             })
-            await newUser.save();
-            res.status(400).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
-           }
-        
-         } else {
-            for (let index = 0; index < cartListItemsIds.length; index++) {
-                if (cartListItemsIds[index]['itemId'] != itemId ) {
-                    cartListItemsIds.unshift({
-                        "itemId":itemId,
-                        "count":count,
-                        "details":details == null ? " ": details
-                    }); 
-                }
-                if (cartListItemsIds[index]['itemId'] == itemId && count == 0) {
-                   const indexOf = cartListItemsIds.indexOf(cartListItemsIds[index]['itemId']);
-                   cartListItemsIds.splice(indexOf,1);
-                   break;
-                }
-                if (cartListItemsIds[index]['itemId'] == itemId && count != 0) {
-           cartListItemsIds[index] = {
-            "itemId":itemId,
-            "count":count,
-            "details":details == null ? " ": details
-        }
+            if (count == 0 ) {
+             res.status(400).json({"status":httpsStatus.FAIL,"data":null,"message":"count 0"});
+            } else {
+             cartListItemsIds.unshift({
+                 "itemId":itemId,
+                 "count":count,
+                 "details":details == null ? " ": details
+             });
+             const newUser = await User.findOneAndUpdate({token:token},{
+                 $set:{
+                     cart:cartListItemsIds
                  }
+              })
+             await newUser.save();
+             res.status(400).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
             }
-            const newUser = await User.findOneAndUpdate({token:token},{
-                $set:{
-                    cart:cartListItemsIds
-                }
-             })
-            await newUser.save();
-         res.status(200).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
+         
+          } else {
+             for (let index = 0; index < cartListItemsIds.length; index++) {
+                 if (cartListItemsIds[index]['itemId'] != itemId ) {
+                     cartListItemsIds.unshift({
+                         "itemId":itemId,
+                         "count":count,
+                         "details":details == null ? " ": details
+                     }); 
+                 }
+                 if (cartListItemsIds[index]['itemId'] == itemId && count == 0) {
+                    const indexOf = cartListItemsIds.indexOf(cartListItemsIds[index]['itemId']);
+                    cartListItemsIds.splice(indexOf,1);
+                    break;
+                 }
+                 if (cartListItemsIds[index]['itemId'] == itemId && count != 0) {
+            cartListItemsIds[index] = {
+             "itemId":itemId,
+             "count":count,
+             "details":details == null ? " ": details
          }
+                  }
+             }
+             const newUser = await User.findOneAndUpdate({token:token},{
+                 $set:{
+                     cart:cartListItemsIds
+                 }
+              })
+             await newUser.save();
+          res.status(200).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
+          }
+       } else {
+        res.status(400).json({"status":httpsStatus.FAIL,"data":null,"message":"count greather than 10"});
+       }
         
          
     } else {
