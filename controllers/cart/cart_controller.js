@@ -10,7 +10,7 @@ const changeItemCart = async(req,res)=>{
      const details = req.body.details;
      const cartListItemsIds = user.cart;
      const newObject = [];
-    if (cartListItemsIds.length ) {
+    if (cartListItemsIds.length <21 ) {
        if (count < 11) {
         if (cartListItemsIds.length == 0  ) {
             if (count == 0 ) {
@@ -66,7 +66,7 @@ const changeItemCart = async(req,res)=>{
         
          
     } else {
-        res.status(400).json({"status":httpsStatus.FAIL,"data":null,"message":"count 0"});
+        res.status(400).json({"status":httpsStatus.FAIL,"data":null,"message":"20 max"});
     }
     } catch (error) {
      console.log(error);
@@ -87,7 +87,7 @@ const getUserCart = async(req,res)=>{
                 {
                     "item":item,
                     "count":cartListItemsIds[index]['count'],
-                    "details":details == null ? " ": details
+                    "details":cartListItemsIds[index]['details'] == null ? " ": cartListItemsIds[index]['details'] 
                 }
             );
         }
