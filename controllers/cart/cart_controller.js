@@ -10,80 +10,67 @@ const changeItemCart = async(req,res)=>{
      const details = req.body.details;
      const cartListItemsIds = user.cart;
      const newObject = [];
-    if (cartListItemsIds.length <21 ) {
-       if (count < 11) {
-        if (cartListItemsIds.length == 0  ) {
-            if (count == 0 ) {
-             res.status(400).json({"status":httpsStatus.FAIL,"data":null,"message":"count 0"});
-            } else {
-             cartListItemsIds.unshift({
-                 "itemId":itemId,
-                 "count":count,
-                 "details":details == null ? " ": details
-             });
-             const newUser = await User.findOneAndUpdate({token:token},{
-                 $set:{
-                     cart:cartListItemsIds
-                 }
-              })
-             await newUser.save();
-             res.status(400).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
-            }
-         
-          } else {
-             for (let index = 0; index < cartListItemsIds.length; index++) {
-                 if (cartListItemsIds[index]['itemId'] != itemId ) {
-                     cartListItemsIds.unshift({
-                         "itemId":itemId,
-                         "count":count,
-                         "details":details == null ? " ": details
-                     }); 
-                   
-                     const newUser = await User.findOneAndUpdate({token:token},{
-                        $set:{
-                            cart:cartListItemsIds
+   if (cartListItemsIds.length < 21) {
+    if (count > 10) {
+        res.status(400).json({"status":httpsStatus.FAIL,"data":null,"message":"count max 10"});
+    } else {
+        if (cartListItemsIds.length ==0) {
+            if (count == 0) {
+                 res.status(400).json({"status":httpsStatus.FAIL,"data":null,"message":"count 0"});
+            } else {     
+                const newUser = await User.findByIdAndUpdate(user.id,{
+                    $push:{
+                        cart:{
+                            "itemId":itemId,
+                            "count":count,
+                            "details":details == null ? " " : details
+                        
                         }
-                     })
-                    await newUser.save();
-                 res.status(200).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
-                 }
-                 if (cartListItemsIds[index]['itemId'] == itemId && count == 0) {
-                    const indexOf = cartListItemsIds.indexOf(cartListItemsIds[index]['itemId']);
-                    cartListItemsIds.splice(indexOf,1);
-                    const newUser = await User.findOneAndUpdate({token:token},{
-                        $set:{
-                            cart:cartListItemsIds
-                        }
-                     })
-                    await newUser.save();
-                 res.status(200).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
-                 }
-                 if (cartListItemsIds[index]['itemId'] == itemId && count != 0) {
-            cartListItemsIds[index] = {
-             "itemId":itemId,
-             "count":count,
-             "details":details == null ? " ": details
-         };
-         const newUser = await User.findOneAndUpdate({token:token},{
-            $set:{
-                cart:cartListItemsIds
+                    }
+                });
+                await newUser.save();
+                res.status(400).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
             }
-         })
-        await newUser.save();
-     res.status(200).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
-                  }
-             }
+        } else {
+          if (count != 0) {
+             const newUser = await User.findByIdAndUpdate(user.id,{
+                    $set:{
+                        cart:{
+                            "itemId":itemId,
+                            "count":count,
+                            "details":details == null ? " " : details
+                        
+                        }
+                    }
+                });
+                await newUser.save();
+                res.status(400).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
+          }else if(count == 0){
+            const newList = [];
+            for (let index = 0; index < cartListItemsIds.length; index++) {
+               if (cartListItemsIds[index]['itemId'] != itemId) {
+                newList.unshift({
+                    "itemId":cartListItemsIds[index]['itemId'] ,
+                     "count":cartListItemsIds[index]['count'] ,
+                      "details":cartListItemsIds[index]['details'] ,
+                })
+               }
+             
+            }
+            const newUser = await User.findByIdAndUpdate(user.id,{
+                $set:{
+                    cart:newList
+                }
+            })
+                await newUser.save();
+                res.status(400).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
            
           }
-      
-       } else {
-        res.status(400).json({"status":httpsStatus.FAIL,"data":null,"message":"count greather than 10"});
-       }
-        
-        
-    } else {
-        res.status(400).json({"status":httpsStatus.FAIL,"data":null,"message":"20 max"});
+        }
     }
+   } else {
+     res.status(400).json({"status":httpsStatus.FAIL,"data":null,"message":"max 20"});
+   }
     } catch (error) {
      console.log(error);
      res.status(400).json({"status":httpsStatus.ERROR,"data":null,"message":"error"});
