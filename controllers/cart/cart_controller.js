@@ -12,7 +12,7 @@ const changeItemCart = async(req,res)=>{
      const newObject = [];
     if (cartListItemsIds.length <21 ) {
        if (count < 11) {
-        if (cartListItemsIds.length != 0  ) {
+        if (cartListItemsIds.length == 0  ) {
             if (count == 0 ) {
              res.status(400).json({"status":httpsStatus.FAIL,"data":null,"message":"count 0"});
             } else {
@@ -38,33 +38,49 @@ const changeItemCart = async(req,res)=>{
                          "count":count,
                          "details":details == null ? " ": details
                      }); 
+                   
+                     const newUser = await User.findOneAndUpdate({token:token},{
+                        $set:{
+                            cart:cartListItemsIds
+                        }
+                     })
+                    await newUser.save();
+                 res.status(200).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
                  }
                  if (cartListItemsIds[index]['itemId'] == itemId && count == 0) {
                     const indexOf = cartListItemsIds.indexOf(cartListItemsIds[index]['itemId']);
                     cartListItemsIds.splice(indexOf,1);
-                    break;
+                    const newUser = await User.findOneAndUpdate({token:token},{
+                        $set:{
+                            cart:cartListItemsIds
+                        }
+                     })
+                    await newUser.save();
+                 res.status(200).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
                  }
                  if (cartListItemsIds[index]['itemId'] == itemId && count != 0) {
             cartListItemsIds[index] = {
              "itemId":itemId,
              "count":count,
              "details":details == null ? " ": details
-         }
+         };
+         const newUser = await User.findOneAndUpdate({token:token},{
+            $set:{
+                cart:cartListItemsIds
+            }
+         })
+        await newUser.save();
+     res.status(200).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
                   }
              }
-             const newUser = await User.findOneAndUpdate({token:token},{
-                 $set:{
-                     cart:cartListItemsIds
-                 }
-              })
-             await newUser.save();
-          res.status(200).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
+           
           }
+      
        } else {
         res.status(400).json({"status":httpsStatus.FAIL,"data":null,"message":"count greather than 10"});
        }
         
-         
+        
     } else {
         res.status(400).json({"status":httpsStatus.FAIL,"data":null,"message":"20 max"});
     }
