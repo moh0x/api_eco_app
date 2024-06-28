@@ -12,7 +12,7 @@ const changeItemCart = async(req,res)=>{
      const newObject = [];
     if (cartListItemsIds.length <21 ) {
        if (count < 11) {
-        if (cartListItemsIds.length == 0  ) {
+        if (cartListItemsIds.length != 0  ) {
             if (count == 0 ) {
              res.status(400).json({"status":httpsStatus.FAIL,"data":null,"message":"count 0"});
             } else {
