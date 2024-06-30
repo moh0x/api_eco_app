@@ -29,7 +29,7 @@ const changeItemCart = async(req,res)=>{
                     }
                 });
                 await newUser.save();
-                res.status(400).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
+                res.status(200).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
             }
         } else {
           if (count != 0) {
@@ -44,7 +44,7 @@ const changeItemCart = async(req,res)=>{
                     }
                 });
                 await newUser.save();
-                res.status(400).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
+                res.status(200).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
           }else if(count == 0){
             const newList = [];
             for (let index = 0; index < cartListItemsIds.length; index++) {
@@ -63,7 +63,7 @@ const changeItemCart = async(req,res)=>{
                 }
             })
                 await newUser.save();
-                res.status(400).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
+                res.status(200).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
            
           }
         }
@@ -99,7 +99,7 @@ const getUserCart = async(req,res)=>{
    res.status(200).json({"status":httpsStatus.SUCCESS,"data":newObject});
    } catch (error) {
     console.log(error);
-    res.status(200).json({"status":httpsStatus.ERROR,"data":null,"message":"error"});
+    res.status(400).json({"status":httpsStatus.ERROR,"data":null,"message":"error"});
    }
 }
 module.exports = {
