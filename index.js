@@ -15,6 +15,7 @@ const favoriteRoute = require('./routes/favorites/favorites_routes');
 const cartRoute = require('./routes/cart/cart_routes');
 const adressRoute = require('./routes/adress/adress_routes');
 const orderRoute = require('./routes/order/order_routes');
+const adminRoute = require('./routes/admin/admin_routes');
 app.use('/api/users/',userRoute);
 app.use('/api/home/categories',categoryRoute);
 app.use('/api/home/items',itemRoute);
@@ -23,6 +24,7 @@ app.use('/api/favorites',favoriteRoute);
 app.use('/api/carts',cartRoute);
 app.use('/api/adress',adressRoute);
 app.use('/api/order',orderRoute);
+app.use('/api/admin',adminRoute);
 app.listen(port);
  mongoose.connect("mongodb+srv://mihoyahou:YzFN4ccF8u7HkKHi@cluster0.jjdh5dp.mongodb.net/");
 /*
