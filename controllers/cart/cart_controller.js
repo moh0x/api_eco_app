@@ -29,12 +29,39 @@ const changeItemCart = async(req,res)=>{
                     }
                 });
                 await newUser.save();
-                res.status(200).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
+                res.status(400).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
             }
         } else {
           if (count != 0) {
-             const newUser = await User.findByIdAndUpdate(user.id,{
+            const itemIds = [];
+            for (let index = 0; index < cartListItemsIds.length; index++) {
+               itemIds.unshift(cartListItemsIds[index]['itemId'])
+                
+            }
+             if (itemIds.includes(itemId)) {
+                const cartRet = [];
+                for (let index = 0; index < cartListItemsIds.length; index++) {
+
+                    if (cartListItemsIds[index]['itemId'] != itemId) {
+                        cartRet.unshift(cartListItemsIds[index]);
+                    }
+                    
+                }
+                cartRet.unshift({
+                    "itemId":itemId,
+                    "count":count,
+                    "details":details == null ? " " : details
+                })
+                const newUser = await User.findByIdAndUpdate(user.id,{
                     $set:{
+                        cart:cartRet
+                    }
+                });
+                await newUser.save();
+                res.status(400).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
+             } else {
+                const newUser = await User.findByIdAndUpdate(user.id,{
+                    $push:{
                         cart:{
                             "itemId":itemId,
                             "count":count,
@@ -44,7 +71,8 @@ const changeItemCart = async(req,res)=>{
                     }
                 });
                 await newUser.save();
-                res.status(200).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
+                res.status(400).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
+             }
           }else if(count == 0){
             const newList = [];
             for (let index = 0; index < cartListItemsIds.length; index++) {
@@ -63,7 +91,7 @@ const changeItemCart = async(req,res)=>{
                 }
             })
                 await newUser.save();
-                res.status(200).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
+                res.status(400).json({"status":httpsStatus.SUCCESS,"data":newUser.cart});
            
           }
         }
@@ -99,7 +127,7 @@ const getUserCart = async(req,res)=>{
    res.status(200).json({"status":httpsStatus.SUCCESS,"data":newObject});
    } catch (error) {
     console.log(error);
-    res.status(400).json({"status":httpsStatus.ERROR,"data":null,"message":"error"});
+    res.status(200).json({"status":httpsStatus.ERROR,"data":null,"message":"error"});
    }
 }
 module.exports = {
